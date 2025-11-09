@@ -1,58 +1,9 @@
-﻿//namespace StringManipulation
-//{
-//    public class BiggerPrefixInAList
-//    {
-//        public BiggerPrefixInAList()
-//        {
-
-//        }
-
-//        private Dictionary<int, string> prefixesSize = [];
-
-//        public string LongestCommonPrefix(string[] strs)
-//        {
-//            string result = "";
-
-//            Array.Sort(strs);
-
-//            int maxLenght = 0;
-
-//            for (int i = 0; i < strs.Length - 1; i++)
-//            {
-//                for (int j = 2; j < strs[i].Length; j++)
-//                {
-//                    if (strs[i][..j] == strs[i + 1][..j])
-//                    {
-//                        if (!prefixesSize.Any(x => x.Key == j))
-//                            prefixesSize.Add(j, strs[i][..j]);
-
-//                        if (maxLenght < j)
-//                            maxLenght = j;
-//                        continue;
-//                    }
-
-//                    break;
-//                }
-//            }
-
-//            if (maxLenght == 0)
-//                return "";
-
-//            return prefixesSize[maxLenght];
-//        }
-//    }
-//}
-
-
+﻿using FluentAssertions;
 
 namespace StringManipulation
 {
     public class BiggerPrefixInAList
     {
-        public BiggerPrefixInAList()
-        {
-        }
-
         private Dictionary<int, string> prefixesSize = [];
 
         public string LongestCommonPrefix(string[] strs)
@@ -97,5 +48,28 @@ namespace StringManipulation
             return prefixesSize[maxLenght];
         }
     }
-}
 
+    public class BiggerPrefixInAListTests
+    {
+        [Theory]
+        [MemberData(nameof(MemberData))]
+        public void PrefixFoundedShouldBeAsExpected(string[] data, string prefix)
+        {
+            // Arrange            
+            var sut = new BiggerPrefixInAList();
+
+            // Act
+            // Assert
+            sut.LongestCommonPrefix(data).Should().Be(prefix);
+
+        }
+
+        public static IEnumerable<object[]> MemberData()
+        {
+            yield return new object[] { new string[] { "flower", "flow", "flight" }, "fl" };
+            yield return new object[] { new string[] { "dog", "racecar", "car" }, "" };
+            yield return new object[] { new string[] { "ab", "a" }, "a" };
+            yield return new object[] { new string[] { "a" }, "a" };
+        }
+    }
+}
