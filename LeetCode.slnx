@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="StringManipulation/StringManipulation.csproj" />
+  <Project Path="tests/UnitTests/UnitTests.csproj" />
+</Solution>
